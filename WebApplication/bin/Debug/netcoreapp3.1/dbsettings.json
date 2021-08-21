@@ -1,0 +1,5 @@
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=LAPTOP-COKUP17A\\SQLEXPRESS01;Database=DB;Trusted_Connection=True;MultipleActiveResultSets=true"
+  }
+}

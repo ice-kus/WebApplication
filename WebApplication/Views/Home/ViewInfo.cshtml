@@ -1,0 +1,26 @@
+﻿@using WebApplication.ViewModels
+@model ViewModel
+
+@{
+    ViewData["Title"] = "Find country";
+}
+
+<h4>Информация по всем странам</h4>
+<br />
+
+<table border="1" width="900" style="border-collapse:collapse;">
+    <tr><th>Название</th><th>Код</th><th>Столица</th><th>Площадь</th><th>Население</th><th>Регион</th></tr>
+    @{
+        foreach (var country in Model.Countries)
+        {
+            <tr>
+                <td>@country.Name</td>
+                <td>@country.Code</td>
+                <td>@country.City.Name</td>
+                <td>@country.Area</td>
+                <td>@country.Population</td>
+                <td>@country.Region.Name</td>
+            </tr>
+        }
+    }
+</table>

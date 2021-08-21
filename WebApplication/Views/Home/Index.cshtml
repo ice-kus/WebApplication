@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "Find country";
+}
+
+<form method="POST">
+    <h4>Информация по одной стране</h4><br />
+    
+    <input style="width: 595px;" type="text" name="country" required /> <br /> <br />
+
+    <input type="submit" value="Поиск" asp-action="FindInfo" />
+</form>
