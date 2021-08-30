@@ -1,37 +1,40 @@
 ﻿using System.Collections.Generic;
 using WebApplication.Models;
 using Microsoft.EntityFrameworkCore;
+using WebApplication.Interfaces;
 
 namespace WebApplication.Repository
 {
-    public class CountryRepository
+    public class CountryRepository : ICountryRepository
     {
-        private readonly ApplicationDbContext applicationDb;
-        public CountryRepository(ApplicationDbContext applicationDb)
+        private readonly ApplicationDbContext db;
+        public CountryRepository(ApplicationDbContext db)
         {
-            this.applicationDb = applicationDb;
+            this.db = db;
         }
-        public IEnumerable<Country> All => applicationDb.Country.Include(i => i.Region).Include(i => i.City);
-        public void Add(string Name, string Code, long CityId, double Area, int Population, long RegionId)
+        public IEnumerable<Country> GetCountryList => db.Country.Include(i => i.region).Include(i => i.city);
+        public void Create(string Name, string Code, long CityId, double Area, int Population, long RegionId)
         {
-            applicationDb.Country.Add
+            db.Country.Add
                 (
                 new Country
                 {
-                    Name = Name,
-                    Code = Code,
-                    CityId = CityId,
-                    Area = Area,
-                    Population = Population,
-                    RegionId = RegionId
+                    name = Name,
+                    code = Code,
+                    cityid = CityId,
+                    area = Area,
+                    population = Population,
+                    regionid = RegionId
                 }
                 );
-            applicationDb.SaveChanges();
         }
         public void Update(Country Country)
         {
-            applicationDb.Country.Update(Country);
-            applicationDb.SaveChanges();
+            db.Country.Update(Country);
+        }
+        public void Save()
+        {
+            db.SaveChanges();
         }
     }
 }

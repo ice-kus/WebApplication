@@ -1,26 +1,30 @@
 ﻿using System.Collections.Generic;
+using WebApplication.Interfaces;
 using WebApplication.Models;
 
 namespace WebApplication.Repository
 {
-    public class CityRepository
+    public class CityRepository : ICityRepository
     {
-        private readonly ApplicationDbContext applicationDb;
-        public CityRepository(ApplicationDbContext applicationDb)
+        private readonly ApplicationDbContext db;
+        public CityRepository(ApplicationDbContext db)
         {
-            this.applicationDb = applicationDb;
+            this.db = db;
         }
-        public IEnumerable<City> All => applicationDb.City;
-        public void Add(string Name)
+        public IEnumerable<City> GetCityList => db.City;
+        public void Create(string Name)
         {
-            applicationDb.City.Add
+            db.City.Add
                 (
                 new City
                 {
-                    Name = Name
+                    name = Name
                 }
                 );
-            applicationDb.SaveChanges();
+        }
+        public void Save()
+        {
+            db.SaveChanges();
         }
     }
 }

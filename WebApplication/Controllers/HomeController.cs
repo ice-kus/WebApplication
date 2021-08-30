@@ -6,31 +6,31 @@ using WebApplication.ViewModels;
 using System.IO;
 using System.Net;
 using Newtonsoft.Json;
-using WebApplication.Repository;
+using WebApplication.Interfaces;
 
 namespace WebApplication.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly CityRepository _City;
-        private readonly RegionRepository _Region;
-        private readonly CountryRepository _Country;
-        public HomeController(CityRepository _City, RegionRepository _Region, CountryRepository _Country)
+        private readonly ICityRepository _city;
+        private readonly IRegionRepository _region;
+        private readonly ICountryRepository _country;
+        public HomeController(ICityRepository _city, IRegionRepository _region, ICountryRepository _country)
         {
-            this._City = _City;
-            this._Region = _Region;
-            this._Country = _Country;
+            this._city = _city;
+            this._region = _region;
+            this._country = _country;
         }
         // -- Главная страница - Страница с поиском --
-        public IActionResult Index()
+        public ViewResult Index()
         {
             return View();
         }
         // -- Страница с информацией по странам --
-        public IActionResult ViewInfo()
+        public ViewResult DisplayInfoCountries()
         {
             ViewModel model = new ViewModel();
-            model.Countries = _Country.All.OrderBy(i => i.Name);
+            model.countries = _country.GetCountryList.OrderBy(i => i.name);
             return View(model);
         }
         // -- Запрос к API --
@@ -50,8 +50,9 @@ namespace WebApplication.Controllers
             response.Close();
             return answer;
         }
-        // -- Поиск информации о стране --
-        public IActionResult FindInfo(string country)
+        // -- Поиск информации по стране --
+        [HttpPost]
+        public IActionResult DisplayInfoCountry(string country)
         {
             ViewModel model = new ViewModel();
             // запрашиваем информацию
@@ -60,61 +61,74 @@ namespace WebApplication.Controllers
                 ConnectAsync(country).Wait();
                 dynamic data = JsonConvert.DeserializeObject(ConnectAsync(country).Result);
                 // выбираем нужную информацию
-                model.Region = data[0].region;
-                model.City = data[0].capital;
-                model.Name = data[0].name;
-                model.Code = data[0].alpha3Code;
-                model.Area = data[0].area;
-                model.Population = data[0].population;
+                model.region = data[0].region;
+                model.city = data[0].capital;
+                model.name = data[0].name;
+                model.code = data[0].alpha3Code;
+                model.area = data[0].area;
+                model.population = data[0].population;
                 // отображаем информацию
-                return View(model);
+                return View("DisplayInfoCountry", model);
             }
             catch
             {
-                // отображаем информацию об ошибке
                 return View("Error");
             }
         }
         // -- Сохранение информации --
-        public IActionResult SaveInfo(ViewModel model)
+        [HttpPost]
+        public IActionResult SaveCity(ViewModel model)
         {
-            // если столицы нет в БД, то добавляем
-            if (!_City.All.Any(i => i.Name == model.City))
-                _City.Add(model.City);
-            // если региона нет в БД, то добавляем
-            if (!_Region.All.Any(i => i.Name == model.Region))
-                _Region.Add(model.Region);
+            if (!_city.GetCityList.Any(i => i.name == model.city))
+            {
+                _city.Create(model.city);
+                _city.Save();
+            }
+            return RedirectToAction("SaveRegion", model);
+        }
+        public IActionResult SaveRegion(ViewModel model)
+        {
+            if (!_region.GetRegionList.Any(i => i.name == model.region))
+            {
+                _region.Create(model.region);
+                _region.Save();
+            }
+            return RedirectToAction("SaveCountry", model);
+        }
+        public IActionResult SaveCountry(ViewModel model)
+        {
             // получаем идентификаторы столицы и региона
-            long RegionId = _Region.All.FirstOrDefault(i => i.Name == model.Region).Id,
-                 CityId = _City.All.FirstOrDefault(i => i.Name == model.City).Id;
+            long regionid = _region.GetRegionList.FirstOrDefault(i => i.name == model.region).id,
+                 cityid = _city.GetCityList.FirstOrDefault(i => i.name == model.city).id;
             // ищем страну в БД
-            Country country = _Country.All.FirstOrDefault(i => i.Name == model.Name);
+            Country country = _country.GetCountryList.FirstOrDefault(i => i.name == model.name);
             // если страна не найдена, то добавляем
             if (country == null)
             {
-                _Country.Add
+                _country.Create
                     (
-                        model.Name,
-                        model.Code,
-                        CityId,
-                        model.Area,
-                        model.Population,
-                        RegionId
+                        model.name,
+                        model.code,
+                        cityid,
+                        model.area,
+                        model.population,
+                        regionid
                     );
             }
             // иначе обновляем имеющуюся запись
             else
             {
-                country.Name = model.Name;
-                country.Code = model.Code;
-                country.CityId = CityId;
-                country.Area = model.Area;
-                country.Population = model.Population;
-                country.RegionId = RegionId;
-                _Country.Update(country);
+                country.name = model.name;
+                country.code = model.code;
+                country.cityid = cityid;
+                country.area = model.area;
+                country.population = model.population;
+                country.regionid = regionid;
+                _country.Update(country);
             }
+            _country.Save();
             // переходим к списку стран
-            return RedirectToAction("ViewInfo");
+            return RedirectToAction("DisplayInfoCountries");
         }
     }
 }

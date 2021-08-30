@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "wz0ZhzVtFKBzcY7+cyTpted9WipwkG5y09J4sVt56pvMUK3V4IVmWjP6ICgTXqRbpPxY7mOL+/aHmG3fh07uKA==",
+  "dgSpecHash": "y5oDRd3Z71c7ePECwl4KdFclZnWWJIrn743gg2SlW3gIjWDV9NA9A04igtjaCPQzNjnhj6JOGi+mGSsCJLGE3A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\mlaym\\OneDrive\\Рабочий стол\\WebApplication\\WebApplication\\WebApplication.csproj",
+  "projectFilePath": "C:\\Users\\mlaym\\OneDrive\\Документы\\GitHub\\WebApplication\\WebApplication\\WebApplication.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mlaym\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\mlaym\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",

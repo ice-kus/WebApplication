@@ -1,26 +1,30 @@
 ﻿using System.Collections.Generic;
+using WebApplication.Interfaces;
 using WebApplication.Models;
 
 namespace WebApplication.Repository
 {
-    public class RegionRepository
+    public class RegionRepository : IRegionRepository
     {
-        private readonly ApplicationDbContext applicationDb;
-        public RegionRepository(ApplicationDbContext appDBContent)
+        private readonly ApplicationDbContext db;
+        public RegionRepository(ApplicationDbContext db)
         {
-            this.applicationDb = appDBContent;
+            this.db = db;
         }
-        public IEnumerable<Region> All => applicationDb.Region;
-        public void Add(string Name)
+        public IEnumerable<Region> GetRegionList => db.Region;
+        public void Create(string Name)
         {
-            applicationDb.Region.Add
+            db.Region.Add
                 (
                 new Region
                 {
-                    Name = Name
+                    name = Name
                 }
                 );
-            applicationDb.SaveChanges();
+        }
+        public void Save()
+        {
+            db.SaveChanges();
         }
     }
 }

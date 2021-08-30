@@ -9,12 +9,12 @@ namespace WebApplication.ViewModels
 {
     public class ViewModel
     {
-        public string Region { get; set; }  // Регион
-        public string City { get; set; }    // Столица
-        public string Name { get; set; }    // Название
-        public string Code { get; set; }    // Код
-        public double Area { get; set; }    // Площадь
-        public int Population { get; set; } // Население
-        public IEnumerable<Country> Countries { get; set; } // Список стран
+        public string region { get; set; }  // Регион
+        public string city { get; set; }    // Столица
+        public string name { get; set; }    // Название
+        public string code { get; set; }    // Код
+        public double area { get; set; }    // Площадь
+        public int population { get; set; } // Население
+        public IEnumerable<Country> countries { get; set; } // Список стран
     }
 }

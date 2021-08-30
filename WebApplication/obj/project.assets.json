@@ -5730,11 +5730,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mlaym\\OneDrive\\Рабочий стол\\WebApplication\\WebApplication\\WebApplication.csproj",
+      "projectUniqueName": "C:\\Users\\mlaym\\OneDrive\\Документы\\GitHub\\WebApplication\\WebApplication\\WebApplication.csproj",
       "projectName": "WebApplication",
-      "projectPath": "C:\\Users\\mlaym\\OneDrive\\Рабочий стол\\WebApplication\\WebApplication\\WebApplication.csproj",
+      "projectPath": "C:\\Users\\mlaym\\OneDrive\\Документы\\GitHub\\WebApplication\\WebApplication\\WebApplication.csproj",
       "packagesPath": "C:\\Users\\mlaym\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mlaym\\OneDrive\\Рабочий стол\\WebApplication\\WebApplication\\obj\\",
+      "outputPath": "C:\\Users\\mlaym\\OneDrive\\Документы\\GitHub\\WebApplication\\WebApplication\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\mlaym\\AppData\\Roaming\\NuGet\\NuGet.Config",

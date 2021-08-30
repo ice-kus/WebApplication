@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using WebApplication.Repository;
+using WebApplication.Interfaces;
 
 namespace WebApplication
 {
@@ -21,9 +22,9 @@ namespace WebApplication
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<CityRepository>();
-            services.AddTransient<RegionRepository>();
-            services.AddTransient<CountryRepository>();
+            services.AddTransient<ICityRepository, CityRepository>();
+            services.AddTransient<IRegionRepository, RegionRepository>();
+            services.AddTransient<ICountryRepository, CountryRepository>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<CityRepository>();

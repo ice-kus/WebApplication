@@ -4,7 +4,7 @@ namespace WebApplication.Models
 {
     public class City
     {
-        public long Id { get; set; }       // Идентификатор
-        public string Name { get; set; }   // Название
+        public long id { get; set; }       // Идентификатор
+        public string name { get; set; }   // Название
     }
 }

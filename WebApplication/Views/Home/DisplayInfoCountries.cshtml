@@ -2,7 +2,7 @@
 @model ViewModel
 
 @{
-    ViewData["Title"] = "Find country";
+    ViewData["Title"] = "Displaying information about countries";
 }
 
 <h4>Информация по всем странам</h4>
@@ -11,15 +11,15 @@
 <table border="1" width="900" style="border-collapse:collapse;">
     <tr><th>Название</th><th>Код</th><th>Столица</th><th>Площадь</th><th>Население</th><th>Регион</th></tr>
     @{
-        foreach (var country in Model.Countries)
+        foreach (var country in Model.countries)
         {
             <tr>
-                <td>@country.Name</td>
-                <td>@country.Code</td>
-                <td>@country.City.Name</td>
-                <td>@country.Area</td>
-                <td>@country.Population</td>
-                <td>@country.Region.Name</td>
+                <td>@country.name</td>
+                <td>@country.code</td>
+                <td>@country.city.name</td>
+                <td>@country.area</td>
+                <td>@country.population</td>
+                <td>@country.region.name</td>
             </tr>
         }
     }

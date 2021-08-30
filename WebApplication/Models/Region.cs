@@ -7,8 +7,7 @@ namespace WebApplication.Models
 {
     public class Region
     {
-        public long Id { get; set; }       // Идентификатор
-        [JsonProperty("region")]
-        public string Name { get; set; }   // Название
+        public long id { get; set; }       // Идентификатор
+        public string name { get; set; }   // Название
     }
 }
